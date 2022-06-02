@@ -306,7 +306,7 @@ const main = async () => {
     `,
   });
   let bo = new THREE.Mesh(bg, bm);
-  // scene.add(bo);
+  scene.add(bo);
   // </BACKGROUND>
 
   // <INTERACTION>
