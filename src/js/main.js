@@ -1,4 +1,4 @@
-import * as THREE from "./threeR136/build/three.module.js";
+import * as THREE from "three";
 import { OrbitControls } from "./threeR136/examples/jsm/controls/OrbitControls.js";
 import * as BufferGeometryUtils from "./threeR136/examples/jsm/utils/BufferGeometryUtils.js";
 import TWEEN from "@tweenjs/tween.js";
