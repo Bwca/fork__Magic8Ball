@@ -1,0 +1,28 @@
+{
+  "name": "fork__magic8ball",
+  "version": "1.0.0",
+  "description": "Forked from the amazing repo https://github.com/cywarr/Magic8Ball",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel src/index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bwca/fork__Magic8Ball.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Bwca/fork__Magic8Ball/issues"
+  },
+  "homepage": "https://github.com/Bwca/fork__Magic8Ball#readme",
+  "devDependencies": {
+    "parcel": "^2.6.0",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "@tweenjs/tween.js": "^18.6.4"
+  }
+}
