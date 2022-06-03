@@ -1,0 +1,56 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:import/errors",
+        "plugin:import/typescript",
+        "plugin:import/warnings",
+        "prettier"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module",
+        "project": "./tsconfig.json"
+    },
+    "plugins": ["@typescript-eslint", "jest", "import"],
+    "rules": {
+        "linebreak-style": ["error", "unix"],
+        "quotes": ["error", "single"],
+        "semi": ["error", "always"],
+        "import/order": [
+            "error",
+            {
+                "groups": ["builtin", "external", "internal"],
+                "newlines-between": "always-and-inside-groups",
+                "alphabetize": {
+                    "order": "asc",
+                    "caseInsensitive": true
+                },
+                "pathGroups": [
+                    {
+                        "pattern": "[a-zA-Z@]**",
+                        "group": "external"
+                    },
+                    {
+                        "pattern": ".**",
+                        "group": "internal"
+                    }
+                ]
+            }
+        ],
+        "@typescript-eslint/explicit-function-return-type": 1
+    },
+    "settings": {
+        "import/extensions": [".js", ".ts"]
+    }
+}

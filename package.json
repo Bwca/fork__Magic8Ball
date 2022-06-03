@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel src/index.html",
+    "lint": "eslint --fix . --ext .ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,7 +22,16 @@
   "devDependencies": {
     "@types/three": "^0.141.0",
     "parcel": "^2.6.0",
-    "process": "^0.11.10"
+    "process": "^0.11.10",
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
+    "eslint": "^8.14.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^26.1.5",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "2.6.2",
+    "typescript": "^4.6.4"
   },
   "dependencies": {
     "@tweenjs/tween.js": "^18.6.4",
