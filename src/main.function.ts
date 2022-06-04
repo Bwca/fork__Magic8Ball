@@ -1,6 +1,6 @@
 import { MathUtils } from 'three';
 
-import { THREEBall8Renderer } from './three-ball-8-renderer.class';
+import { THREEBall8Renderer } from './three-ball-8-renderer/three-ball-8-renderer.class';
 
 const DEFAULT_ANSWERS: string[] = [
     'It|is|certain',
@@ -32,15 +32,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const renderer = new THREEBall8Renderer();
     renderer.showBall();
 
-    let isRunning = false;
-    window.addEventListener('click', () => {
-        if (isRunning) {
-            return;
-        }
-        isRunning = true;
-
+    window.addEventListener('pointerup', (event) => {
         const answer = DEFAULT_ANSWERS[MathUtils.randInt(0, DEFAULT_ANSWERS.length - 1)];
-        renderer.showAnswer(answer, '|');
-        isRunning = false;
+        renderer.showAnswer({
+            answer,
+            lineSeparator: '|',
+            event,
+        });
     });
 });

@@ -4,7 +4,7 @@ import { buildSides } from './build-sides.function';
 import { FBM } from './external-modules';
 import { mergeBufferGeometries } from './three-r136/examples/jsm/utils/merge-buffer-geometries.util';
 
-export function createBall(tex: Texture, time: { value: number }): Mesh {
+export function createBall(tex: Texture, time: { value: number }, ballColor: number | string): Mesh {
     const outerSphere = new SphereGeometry(4, 200, 100, 1, Math.PI * 2, Math.PI * 0.15, Math.PI * 0.85);
     const innerSphere = outerSphere.clone().scale(0.9, 0.9, 0.9);
     const slides = buildSides(outerSphere);
@@ -15,7 +15,7 @@ export function createBall(tex: Texture, time: { value: number }): Mesh {
     }
     const standardMaterial = new MeshStandardMaterial({
         envMap: tex,
-        color: new Color(0x000000).addScalar(0.25).multiplyScalar(5),
+        color: new Color(ballColor).addScalar(0.25).multiplyScalar(5),
         roughness: 0.75,
         metalness: 1,
     });

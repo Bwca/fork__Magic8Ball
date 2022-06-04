@@ -9,25 +9,23 @@ import {
     AmbientLight,
     Clock,
     Texture,
+    Raycaster,
+    Vector2,
+    InstancedMesh,
+    MeshBasicMaterial,
+    PlaneGeometry,
 } from 'three';
 
-import { createAnswerTextures } from './create-answer-textures';
-import { createBackground } from './create-background.function';
-import { createBall } from './create-ball.function';
-import { createTextInscription } from './create-text-inscription.function';
-import { GlobalUniforms } from './models/global-uniforms.model';
-import { TweenValue } from './models/tween-value.model';
-import { TEXTURE } from './texture.const';
-import { OrbitControls } from './three-r136/examples/jsm/controls/orbit-controls.class';
-
-abstract class AbstractRenderer {
-    // eslint-disable-next-line no-unused-vars
-    public abstract showBall(host: HTMLElement): void;
-    public abstract question(): void;
-    public abstract hideAnswer(): void;
-    // eslint-disable-next-line no-unused-vars
-    public abstract showAnswer(answer: string, lineSeparator: string): void;
-}
+import { createAnswerTextures } from '../create-answer-textures';
+import { createBackground } from '../create-background.function';
+import { createBall } from '../create-ball.function';
+import { createTextInscription } from '../create-text-inscription.function';
+import { GlobalUniforms } from '../models/global-uniforms.model';
+import { TweenValue } from '../models/tween-value.model';
+import { TEXTURE } from '../texture.const';
+import { OrbitControls } from '../three-r136/examples/jsm/controls/orbit-controls.class';
+import { AbstractRenderer } from './abstract-renderer.class';
+import { AnswerPayload } from './answer-payload.model';
 
 export class THREEBall8Renderer implements AbstractRenderer {
     private readonly globalUniforms: GlobalUniforms = {
@@ -43,8 +41,9 @@ export class THREEBall8Renderer implements AbstractRenderer {
     private controls!: OrbitControls;
     private readonly clock = new Clock();
     private isRunning = false;
+    private writing!: InstancedMesh<PlaneGeometry, MeshBasicMaterial>;
 
-    public constructor() {
+    public constructor(ballColor: number | string = 'indigo') {
         this.scene = new Scene();
         this.setupCamera();
         this.setupRenderer();
@@ -52,7 +51,7 @@ export class THREEBall8Renderer implements AbstractRenderer {
         this.loadTexture();
         this.addLighting();
         this.addWriting();
-        this.addTheBall();
+        this.addTheBall(ballColor);
         this.addBackground();
     }
 
@@ -62,18 +61,15 @@ export class THREEBall8Renderer implements AbstractRenderer {
         this.generateAnimation(this.globalUniforms.textBackgroundVisibility, 1, 0.3, 2000, 2000).start();
     }
 
-    public hideAnswer(): void {
-        // this.hideText.start();
-    }
-
-    public question(): void {
-        //  this.hideText.start();
-    }
-
-    public showAnswer(answer: string, lineSeparator: string): void {
+    public showAnswer({ answer, event, lineSeparator }: AnswerPayload): void {
         if (this.isRunning) {
             return;
         }
+
+        if (event && !this.isEventInsideCentralCircle(event)) {
+            return;
+        }
+
         const fadeOut = this.hideText;
         fadeOut.onStart(() => {
             this.isRunning = true;
@@ -95,6 +91,15 @@ export class THREEBall8Renderer implements AbstractRenderer {
 
     private get showText(): TweenValue {
         return this.generateAnimation(this.globalUniforms.textVisibility, 0, 1, 2000, 1000);
+    }
+
+    private isEventInsideCentralCircle(event: PointerEvent | MouseEvent): boolean {
+        const pointer = new Vector2();
+        const raycaster = new Raycaster();
+        pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+        pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        raycaster.setFromCamera(pointer, this.camera);
+        return raycaster.intersectObject(this.writing).some((m) => m.uv!.subScalar(0.5).length() * 2 < 0.5);
     }
 
     private setupControls(): void {
@@ -134,13 +139,13 @@ export class THREEBall8Renderer implements AbstractRenderer {
     }
 
     private addWriting(): void {
-        const writing = createTextInscription(this.globalUniforms);
-        writing.renderOrder = 9998;
-        this.scene.add(writing);
+        this.writing = createTextInscription(this.globalUniforms);
+        this.writing.renderOrder = 9998;
+        this.scene.add(this.writing);
     }
 
-    private addTheBall(): void {
-        const theBall = createBall(this.texture, this.globalUniforms.time);
+    private addTheBall(ballColor: number | string): void {
+        const theBall = createBall(this.texture, this.globalUniforms.time, ballColor);
         theBall.renderOrder = 9999;
         this.scene.add(theBall);
     }
