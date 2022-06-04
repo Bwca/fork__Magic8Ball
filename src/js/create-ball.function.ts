@@ -2,7 +2,7 @@ import { SphereGeometry, Material, MeshStandardMaterial, Color, MeshLambertMater
 
 import { buildSides } from './build-sides.function';
 import { FBM } from './external-modules';
-import { mergeBufferGeometries } from './threeR136/examples/jsm/utils/BufferGeometryUtils';
+import { mergeBufferGeometries } from './threeR136/examples/jsm/utils/merge-buffer-geometries.util';
 
 export function createBall(tex: Texture, time: { value: number }): Mesh {
     const outerSphere = new SphereGeometry(4, 200, 100, 1, Math.PI * 2, Math.PI * 0.15, Math.PI * 0.85);
@@ -10,6 +10,9 @@ export function createBall(tex: Texture, time: { value: number }): Mesh {
     const slides = buildSides(outerSphere);
     const lens = new SphereGeometry(3.99, 200, 25, 0, Math.PI * 2, 0, Math.PI * 0.15);
     const geometry = mergeBufferGeometries([outerSphere, innerSphere, slides, lens], true);
+    if (!geometry) {
+        throw new Error('Could not obtain geometry for the ball!');
+    }
     const standardMaterial = new MeshStandardMaterial({
         envMap: tex,
         color: new Color('indigo').addScalar(0.25).multiplyScalar(5),
