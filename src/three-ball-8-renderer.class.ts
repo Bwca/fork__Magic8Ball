@@ -42,7 +42,7 @@ export class THREEBall8Renderer implements AbstractRenderer {
     private renderer!: WebGLRenderer;
     private controls!: OrbitControls;
     private readonly clock = new Clock();
-    private readonly createAnswerTextures = createAnswerTextures;
+    private isRunning = false;
 
     public constructor() {
         this.scene = new Scene();
@@ -63,18 +63,27 @@ export class THREEBall8Renderer implements AbstractRenderer {
     }
 
     public hideAnswer(): void {
-        this.hideText.start();
+        // this.hideText.start();
     }
 
     public question(): void {
-        this.hideText.start();
+        //  this.hideText.start();
     }
 
     public showAnswer(answer: string, lineSeparator: string): void {
+        if (this.isRunning) {
+            return;
+        }
         const fadeOut = this.hideText;
+        fadeOut.onStart(() => {
+            this.isRunning = true;
+        });
         const fadeIn = this.showText;
         fadeIn.onStart(() => {
             this.setNewText(answer, lineSeparator);
+        });
+        fadeIn.onComplete(() => {
+            this.isRunning = false;
         });
         fadeOut.chain(fadeIn);
         fadeOut.start();
@@ -152,7 +161,7 @@ export class THREEBall8Renderer implements AbstractRenderer {
     }
 
     private setNewText(text: string, lineSeparator: string): void {
-        this.globalUniforms.text.value = this.createAnswerTextures(text, lineSeparator);
+        this.globalUniforms.text.value = createAnswerTextures(text, lineSeparator);
     }
 
     private generateAnimation(param: { value: number }, valStart: number, valEnd: number, duration = 1000, delay = 0): TweenValue {

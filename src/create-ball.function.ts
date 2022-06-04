@@ -15,7 +15,7 @@ export function createBall(tex: Texture, time: { value: number }): Mesh {
     }
     const standardMaterial = new MeshStandardMaterial({
         envMap: tex,
-        color: new Color('indigo').addScalar(0.25).multiplyScalar(5),
+        color: new Color(0x000000).addScalar(0.25).multiplyScalar(5),
         roughness: 0.75,
         metalness: 1,
     });
