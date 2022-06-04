@@ -1,1 +1,1 @@
-export { create8Ball } from './js';
+export { THREEBall8Renderer } from './three-ball-8-renderer.class';

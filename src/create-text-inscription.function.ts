@@ -1,9 +1,9 @@
 import { PlaneGeometry, InstancedBufferAttribute, MeshBasicMaterial, Color, AdditiveBlending, InstancedMesh, Matrix4 } from 'three';
 
-import { GlobalUniforms } from './global-uniforms.model';
+import { GlobalUniforms } from './models/global-uniforms.model';
 
 export function createTextInscription({
-    baseVisibility,
+    textBackgroundVisibility: baseVisibility,
     textVisibility,
     text,
 }: GlobalUniforms): InstancedMesh<PlaneGeometry, MeshBasicMaterial> {

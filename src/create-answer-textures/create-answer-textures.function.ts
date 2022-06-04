@@ -1,12 +1,8 @@
 import { CanvasTexture } from 'three';
 
-export function createAnswerTextures(answers: string[], lineSeparator: string): CanvasTexture[] {
-    return answers.map((a) => a.split(lineSeparator)).map(mapAnswerToCanvasItem);
-}
-
-function mapAnswerToCanvasItem(answerLines: string[]): CanvasTexture {
+export function createAnswerTextures(answer: string, lineSeparator: string): CanvasTexture {
+    const answerLines = answer.split(lineSeparator);
     const canvasElement = document.createElement('canvas');
-    //  c.style.fontSmooth = "never";
     canvasElement.width = canvasElement.height = 256;
     const ctx = canvasElement.getContext('2d');
     if (!ctx) {
@@ -19,8 +15,7 @@ function mapAnswerToCanvasItem(answerLines: string[]): CanvasTexture {
     const sizeRatio = 1.0;
     ctx.font = `bold ${size}px 'Courier New'`;
 
-    const pcLength = answerLines.length;
-    const startPoint = (pcLength - 1) * 0.5 * size * sizeRatio;
+    const startPoint = (answerLines.length - 1) * 0.5 * size * sizeRatio;
     ctx.fillStyle = '#fff';
     answerLines.forEach((pc, idx) => {
         ctx.fillText(pc.toUpperCase(), 127, 127 - startPoint + idx * size * sizeRatio);

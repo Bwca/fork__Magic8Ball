@@ -8,7 +8,7 @@
         "dist"
     ],
     "scripts": {
-        "start": "parcel src/index.html",
+        "start": "parcel src/static/index.html",
         "lint": "eslint --fix . --ext .ts",
         "build": "parcel build --no-source-maps",
         "test": "echo \"Error: no test specified\" && exit 1"
@@ -26,6 +26,7 @@
     "homepage": "https://github.com/Bwca/fork__Magic8Ball#readme",
     "devDependencies": {
         "@parcel/transformer-typescript-types": "^2.6.0",
+        "@types/node": "^17.0.39",
         "@types/three": "^0.141.0",
         "@typescript-eslint/eslint-plugin": "^5.21.0",
         "@typescript-eslint/parser": "^5.21.0",

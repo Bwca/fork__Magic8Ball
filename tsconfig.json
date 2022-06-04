@@ -1,23 +1,23 @@
 {
-  "compilerOptions": {
-    "target": "ES2015",
-    "lib": ["ESNext", "DOM"],
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "declaration": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "composite": false,
-    "removeComments": true,
-    "downlevelIteration": true,
-    "isolatedModules": false,
-    "strict": true,
-    "noImplicitAny": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "allowJs": true,
-    "sourceMap": false
-  },
-  "include": ["src/**/*"],
-  "exclude": ["src/**/*.test.ts", "src/**/*__test__"]
+    "compilerOptions": {
+        "target": "ES2015",
+        "lib": ["ESNext", "DOM"],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "declaration": true,
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "composite": false,
+        "removeComments": true,
+        "downlevelIteration": true,
+        "isolatedModules": false,
+        "strict": true,
+        "noImplicitAny": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "allowJs": true,
+        "sourceMap": false
+    },
+    "include": ["src/**/*"],
+    "exclude": ["src/**/*.test.ts", "src/**/*__test__"]
 }
