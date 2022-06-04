@@ -1,5 +1,18 @@
 import { Tween, update } from '@tweenjs/tween.js';
-import * as THREE from 'three';
+import {
+    Scene,
+    PerspectiveCamera,
+    WebGLRenderer,
+    TextureLoader,
+    sRGBEncoding,
+    EquirectangularReflectionMapping,
+    DirectionalLight,
+    AmbientLight,
+    Vector2,
+    Raycaster,
+    MathUtils,
+    Clock,
+} from 'three';
 
 import { createAnswerTextures } from './create-answer-textures';
 import { createBackground } from './create-background.function';
@@ -9,10 +22,10 @@ import { GlobalUniforms } from './global-uniforms.model';
 import { OrbitControls } from './threeR136/examples/jsm/controls/OrbitControls.js';
 
 const main = async (): Promise<void> => {
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 2000);
+    const scene = new Scene();
+    const camera = new PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 2000);
     camera.position.set(0, 1, 0.375).setLength(15);
-    const renderer = new THREE.WebGLRenderer({
+    const renderer = new WebGLRenderer({
         antialias: true,
     });
     renderer.setSize(innerWidth, innerHeight);
@@ -29,15 +42,15 @@ const main = async (): Promise<void> => {
     controls.minDistance = 8;
     controls.maxDistance = 15;
 
-    const textureLoader = new THREE.TextureLoader();
+    const textureLoader = new TextureLoader();
 
     const texture = await textureLoader.loadAsync('https://threejs.org/examples/textures/2294472375_24a3b8ef46_o.jpg');
-    texture.encoding = THREE.sRGBEncoding;
-    texture.mapping = THREE.EquirectangularReflectionMapping;
+    texture.encoding = sRGBEncoding;
+    texture.mapping = EquirectangularReflectionMapping;
 
-    const light = new THREE.DirectionalLight(0xffffff, 0.5);
+    const light = new DirectionalLight(0xffffff, 0.5);
     light.position.set(2, 1, -2);
-    scene.add(new THREE.AmbientLight(0xffffff, 1));
+    scene.add(new AmbientLight(0xffffff, 1));
 
     const answersTextures = createAnswerTextures();
 
@@ -79,8 +92,8 @@ const main = async (): Promise<void> => {
         })
         .start();
 
-    const pointer = new THREE.Vector2();
-    const raycaster = new THREE.Raycaster();
+    const pointer = new Vector2();
+    const raycaster = new Raycaster();
     window.addEventListener('pointerup', (event) => {
         if (isRunning) {
             return;
@@ -113,12 +126,12 @@ const main = async (): Promise<void> => {
     }
 
     function setNewText(): void {
-        globalUniforms.text.value = answersTextures[THREE.MathUtils.randInt(0, answersTextures.length - 1)];
+        globalUniforms.text.value = answersTextures[MathUtils.randInt(0, answersTextures.length - 1)];
     }
 
     // </INTERACTION>
 
-    const clock = new THREE.Clock();
+    const clock = new Clock();
 
     renderer.setAnimationLoop(() => {
         const time = clock.getElapsedTime();
