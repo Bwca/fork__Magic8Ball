@@ -1,6 +1,6 @@
 {
     "name": "fork-magic-8-ball",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "description": "Forked from the amazing repo https://github.com/cywarr/Magic8Ball",
     "source": "src/index.ts",
     "main": "dist/index.js",
@@ -11,7 +11,8 @@
         "start": "parcel src/static/index.html",
         "lint": "eslint --fix . --ext .ts",
         "build": "parcel build --no-source-maps",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "generate-types": "npx -p typescript tsc src/index.ts --declaration --allowJs --emitDeclarationOnly --outDir types"
     },
     "repository": {
         "type": "git",

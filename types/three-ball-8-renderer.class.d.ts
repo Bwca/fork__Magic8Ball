@@ -1,4 +1,10 @@
-export declare class THREEBall8Renderer {
+declare abstract class AbstractRenderer {
+    abstract showBall(host: HTMLElement): void;
+    abstract question(): void;
+    abstract hideAnswer(): void;
+    abstract showAnswer(answer: string, lineSeparator: string): void;
+}
+export declare class THREEBall8Renderer implements AbstractRenderer {
     private readonly globalUniforms;
     private readonly scene;
     private texture;
@@ -26,3 +32,4 @@ export declare class THREEBall8Renderer {
     private setNewText;
     private generateAnimation;
 }
+export {};

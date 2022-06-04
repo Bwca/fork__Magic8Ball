@@ -17,6 +17,7 @@ import { createBall } from './create-ball.function';
 import { createTextInscription } from './create-text-inscription.function';
 import { GlobalUniforms } from './models/global-uniforms.model';
 import { TweenValue } from './models/tween-value.model';
+import { TEXTURE } from './texture.const';
 import { OrbitControls } from './three-r136/examples/jsm/controls/orbit-controls.class';
 
 abstract class AbstractRenderer {
@@ -25,7 +26,7 @@ abstract class AbstractRenderer {
     public abstract question(): void;
     public abstract hideAnswer(): void;
     // eslint-disable-next-line no-unused-vars
-    public abstract showAnswer(answer: string): void;
+    public abstract showAnswer(answer: string, lineSeparator: string): void;
 }
 
 export class THREEBall8Renderer implements AbstractRenderer {
@@ -69,11 +70,11 @@ export class THREEBall8Renderer implements AbstractRenderer {
         this.hideText.start();
     }
 
-    public showAnswer(answer: string): void {
+    public showAnswer(answer: string, lineSeparator: string): void {
         const fadeOut = this.hideText;
         const fadeIn = this.showText;
         fadeIn.onStart(() => {
-            this.setNewText(answer);
+            this.setNewText(answer, lineSeparator);
         });
         fadeOut.chain(fadeIn);
         fadeOut.start();
@@ -114,7 +115,7 @@ export class THREEBall8Renderer implements AbstractRenderer {
     }
 
     private loadTexture(): void {
-        this.texture = new TextureLoader().load(require('./static/assets/texture.jpg'));
+        this.texture = new TextureLoader().load(TEXTURE);
         this.texture.encoding = sRGBEncoding;
         this.texture.mapping = EquirectangularReflectionMapping;
     }
@@ -150,8 +151,8 @@ export class THREEBall8Renderer implements AbstractRenderer {
         });
     }
 
-    private setNewText(text: string): void {
-        this.globalUniforms.text.value = this.createAnswerTextures(text, '|');
+    private setNewText(text: string, lineSeparator: string): void {
+        this.globalUniforms.text.value = this.createAnswerTextures(text, lineSeparator);
     }
 
     private generateAnimation(param: { value: number }, valStart: number, valEnd: number, duration = 1000, delay = 0): TweenValue {
