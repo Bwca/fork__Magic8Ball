@@ -2,7 +2,7 @@ import { SphereGeometry, Material, MeshStandardMaterial, Color, MeshLambertMater
 
 import { buildSides } from './build-sides.function';
 import { FBM } from './external-modules';
-import { mergeBufferGeometries } from './threeR136/examples/jsm/utils/merge-buffer-geometries.util';
+import { mergeBufferGeometries } from './three-r136/examples/jsm/utils/merge-buffer-geometries.util';
 
 export function createBall(tex: Texture, time: { value: number }): Mesh {
     const outerSphere = new SphereGeometry(4, 200, 100, 1, Math.PI * 2, Math.PI * 0.15, Math.PI * 0.85);

@@ -1,8 +1,6 @@
 import { CanvasTexture } from 'three';
 
-import { DEFAULT_ANSWERS } from './default-answers.const';
-
-export function createAnswerTextures(answers = DEFAULT_ANSWERS, lineSeparator = '|'): CanvasTexture[] {
+export function createAnswerTextures(answers: string[], lineSeparator: string): CanvasTexture[] {
     return answers.map((a) => a.split(lineSeparator)).map(mapAnswerToCanvasItem);
 }
 

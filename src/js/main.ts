@@ -18,10 +18,11 @@ import { createAnswerTextures } from './create-answer-textures';
 import { createBackground } from './create-background.function';
 import { createBall } from './create-ball.function';
 import { createTextInscription } from './create-text-inscription.function';
+import { DEFAULT_ANSWERS } from './default-answers.const';
 import { GlobalUniforms } from './global-uniforms.model';
-import { OrbitControls } from './threeR136/examples/jsm/controls/OrbitControls.js';
+import { OrbitControls } from './three-r136/examples/jsm/controls/orbit-controls.class';
 
-const main = async (): Promise<void> => {
+export async function create8Ball(answers = DEFAULT_ANSWERS, lineSeparator = '|'): Promise<void> {
     const scene = new Scene();
     const camera = new PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 2000);
     camera.position.set(0, 1, 0.375).setLength(15);
@@ -52,7 +53,7 @@ const main = async (): Promise<void> => {
     light.position.set(2, 1, -2);
     scene.add(new AmbientLight(0xffffff, 1));
 
-    const answersTextures = createAnswerTextures();
+    const answersTextures = createAnswerTextures(answers, lineSeparator);
 
     const globalUniforms: GlobalUniforms = {
         time: { value: 0 },
@@ -140,6 +141,6 @@ const main = async (): Promise<void> => {
         update();
         renderer.render(scene, camera);
     });
-};
+}
 
-document.addEventListener('DOMContentLoaded', main);
+document.addEventListener('DOMContentLoaded', () => create8Ball());
