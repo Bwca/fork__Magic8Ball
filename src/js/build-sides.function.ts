@@ -3,7 +3,6 @@ import { Vector3, PlaneGeometry, SphereGeometry } from 'three';
 export function buildSides(sphereGeometry: SphereGeometry): PlaneGeometry {
     const vector = new Vector3();
     const { widthSegments } = sphereGeometry.parameters;
-    console.log(widthSegments)
     const points = new Array((widthSegments));
     for (let i = 0; i <= widthSegments; i++) {
         vector.fromBufferAttribute(sphereGeometry.attributes.position, i);
