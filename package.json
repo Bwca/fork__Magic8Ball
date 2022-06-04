@@ -1,11 +1,16 @@
 {
-  "name": "fork__magic8ball",
+  "name": "fork-magic-8-ball",
   "version": "1.0.0",
   "description": "Forked from the amazing repo https://github.com/cywarr/Magic8Ball",
-  "main": "index.js",
+  "source": "src/index.ts",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "start": "parcel src/index.html",
     "lint": "eslint --fix . --ext .ts",
+    "build": "parcel build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

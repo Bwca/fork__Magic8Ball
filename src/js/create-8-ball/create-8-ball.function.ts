@@ -14,13 +14,13 @@ import {
     Clock,
 } from 'three';
 
-import { createAnswerTextures } from './create-answer-textures';
-import { createBackground } from './create-background.function';
-import { createBall } from './create-ball.function';
-import { createTextInscription } from './create-text-inscription.function';
-import { DEFAULT_ANSWERS } from './default-answers.const';
-import { GlobalUniforms } from './global-uniforms.model';
-import { OrbitControls } from './three-r136/examples/jsm/controls/orbit-controls.class';
+import { createAnswerTextures } from '../create-answer-textures';
+import { createBackground } from '../create-background.function';
+import { createBall } from '../create-ball.function';
+import { createTextInscription } from '../create-text-inscription.function';
+import { DEFAULT_ANSWERS } from '../default-answers.const';
+import { GlobalUniforms } from '../global-uniforms.model';
+import { OrbitControls } from '../three-r136/examples/jsm/controls/orbit-controls.class';
 
 export async function create8Ball(answers = DEFAULT_ANSWERS, lineSeparator = '|'): Promise<void> {
     const scene = new Scene();
@@ -142,5 +142,3 @@ export async function create8Ball(answers = DEFAULT_ANSWERS, lineSeparator = '|'
         renderer.render(scene, camera);
     });
 }
-
-document.addEventListener('DOMContentLoaded', () => create8Ball());
