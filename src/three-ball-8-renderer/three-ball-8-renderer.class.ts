@@ -61,6 +61,20 @@ export class THREEBall8Renderer implements AbstractRenderer {
         this.generateAnimation(this.globalUniforms.textBackgroundVisibility, 1, 0.3, 2000, 2000).start();
     }
 
+    public hideAnswer(): void {
+        if (!this.isTextVisible || this.isRunning) {
+            return;
+        }
+        this.hideText()
+            .onStart(() => {
+                this.isRunning = true;
+            })
+            .onComplete(() => {
+                this.isRunning = false;
+            })
+            .start();
+    }
+
     public showAnswer({ answer, event, lineSeparator }: AnswerPayload): void {
         if (this.isRunning) {
             return;
@@ -70,27 +84,35 @@ export class THREEBall8Renderer implements AbstractRenderer {
             return;
         }
 
-        const fadeOut = this.hideText;
-        fadeOut.onStart(() => {
-            this.isRunning = true;
-        });
-        const fadeIn = this.showText;
-        fadeIn.onStart(() => {
-            this.setNewText(answer, lineSeparator);
-        });
-        fadeIn.onComplete(() => {
-            this.isRunning = false;
-        });
-        fadeOut.chain(fadeIn);
-        fadeOut.start();
+        if (this.isTextVisible) {
+            this.hideText()
+                .onStart(() => {
+                    this.isRunning = true;
+                })
+                .chain(this.showText(answer, lineSeparator))
+                .start();
+        } else {
+            this.showText(answer, lineSeparator).start();
+        }
     }
 
-    private get hideText(): TweenValue {
+    private get isTextVisible(): boolean {
+        return this.globalUniforms.textVisibility.value === 1;
+    }
+
+    private hideText(): TweenValue {
         return this.generateAnimation(this.globalUniforms.textVisibility, 1, 0, 1000, 500);
     }
 
-    private get showText(): TweenValue {
-        return this.generateAnimation(this.globalUniforms.textVisibility, 0, 1, 2000, 1000);
+    private showText(answer: string, lineSeparator: string): TweenValue {
+        return this.generateAnimation(this.globalUniforms.textVisibility, 0, 1, 2000, 1000)
+            .onStart(() => {
+                this.isRunning = true;
+                this.setNewText(answer, lineSeparator);
+            })
+            .onComplete(() => {
+                this.isRunning = false;
+            });
     }
 
     private isEventInsideCentralCircle(event: PointerEvent | MouseEvent): boolean {
