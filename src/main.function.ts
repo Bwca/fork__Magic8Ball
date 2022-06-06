@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderer.showBall();
 
     window.addEventListener('pointerup', (event) => {
+        renderer.hideAnswer();
         const answer = DEFAULT_ANSWERS[MathUtils.randInt(0, DEFAULT_ANSWERS.length - 1)];
         renderer.showAnswer({
             answer,
