@@ -12,9 +12,11 @@ export declare class THREEBall8Renderer implements AbstractRenderer {
     private writing;
     constructor(ballColor?: number | string);
     showBall(host?: HTMLElement): void;
+    hideAnswer(): void;
     showAnswer({ answer, event, lineSeparator }: AnswerPayload): void;
-    private get hideText();
-    private get showText();
+    private get isTextVisible();
+    private hideText;
+    private showText;
     private isEventInsideCentralCircle;
     private setupControls;
     private setupCamera;
