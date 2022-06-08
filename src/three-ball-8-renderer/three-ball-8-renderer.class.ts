@@ -58,7 +58,7 @@ export class THREEBall8Renderer implements AbstractRenderer {
     // eslint-disable-next-line no-unused-vars
     public showBall(host?: HTMLElement): void {
         this.startAnimationLoop();
-        this.generateAnimation(this.globalUniforms.textBackgroundVisibility, 1, 0.3, 2000, 2000).start();
+        this.generateAnimation(this.globalUniforms.textBackgroundVisibility, 1, 0.25, 2000, 1000).start();
     }
 
     public hideAnswer(): void {
@@ -188,7 +188,19 @@ export class THREEBall8Renderer implements AbstractRenderer {
     }
 
     private setNewText(text: string, lineSeparator: string): void {
-        this.globalUniforms.text.value = createAnswerTextures(text, lineSeparator);
+        this.globalUniforms.text.value = createAnswerTextures({
+            answer: {
+                lineSeparator,
+                text,
+            },
+            fontParams: {
+                fillStyle: '#FFF',
+                size: 35,
+                // eslint-disable-next-line quotes
+                font: "bold 35px 'Arial'",
+                sizeRatio: 1,
+            },
+        });
     }
 
     private generateAnimation(param: { value: number }, valStart: number, valEnd: number, duration = 1000, delay = 0): TweenValue {

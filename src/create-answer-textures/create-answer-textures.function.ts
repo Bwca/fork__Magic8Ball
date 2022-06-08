@@ -1,24 +1,27 @@
 import { CanvasTexture } from 'three';
 
-export function createAnswerTextures(answer: string, lineSeparator: string): CanvasTexture {
-    const answerLines = answer.split(lineSeparator);
+import { CreateAnswerTexturesPayload } from '../models';
+
+export function createAnswerTextures({ answer, fontParams }: CreateAnswerTexturesPayload): CanvasTexture {
+    const answerLines = answer.text.split(answer.lineSeparator);
+    const { fillStyle, font, size, sizeRatio } = fontParams;
+    const side = 256;
     const canvasElement = document.createElement('canvas');
-    canvasElement.width = canvasElement.height = 256;
+    canvasElement.width = canvasElement.height = side;
     const ctx = canvasElement.getContext('2d');
     if (!ctx) {
         throw Error('Could not obtain 2d context for answer!');
     }
-    ctx.clearRect(0, 0, 256, 256);
+    ctx.clearRect(0, 0, side, side);
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    const size = 30;
-    const sizeRatio = 1.0;
-    ctx.font = `bold ${size}px 'Courier New'`;
+    ctx.font = font;
 
     const startPoint = (answerLines.length - 1) * 0.5 * size * sizeRatio;
-    ctx.fillStyle = '#fff';
+    ctx.fillStyle = fillStyle;
+    const halfSide = (side - 2) / 2;
     answerLines.forEach((pc, idx) => {
-        ctx.fillText(pc.toUpperCase(), 127, 127 - startPoint + idx * size * sizeRatio);
+        ctx.fillText(pc.toUpperCase(), halfSide, halfSide - startPoint + idx * size * sizeRatio);
     });
 
     return new CanvasTexture(canvasElement);
