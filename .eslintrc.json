@@ -24,7 +24,7 @@
     },
     "plugins": ["@typescript-eslint", "jest", "import"],
     "rules": {
-        "linebreak-style": ["error", "unix"],
+        "linebreak-style": "off",
         "quotes": ["error", "single"],
         "semi": ["error", "always"],
         "import/order": [
