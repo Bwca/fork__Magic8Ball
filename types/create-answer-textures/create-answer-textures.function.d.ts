@@ -1,2 +1,3 @@
 import { CanvasTexture } from 'three';
-export declare function createAnswerTextures(answer: string, lineSeparator: string): CanvasTexture;
+import { CreateAnswerTexturesPayload } from '../models';
+export declare function createAnswerTextures({ answer, fontParams }: CreateAnswerTexturesPayload): CanvasTexture;

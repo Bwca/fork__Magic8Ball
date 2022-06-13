@@ -43,9 +43,9 @@ export class THREEBall8Renderer implements AbstractRenderer {
     private isRunning = false;
     private writing!: InstancedMesh<PlaneGeometry, MeshBasicMaterial>;
 
-    public constructor(ballColor: number | string = 'indigo') {
+    public constructor(ballColor: number | string = 'indigo', initialFieldOfView: number = 60) {
         this.scene = new Scene();
-        this.setupCamera();
+        this.setupCamera(initialFieldOfView);
         this.setupRenderer();
         this.setupControls();
         this.loadTexture();
@@ -132,8 +132,8 @@ export class THREEBall8Renderer implements AbstractRenderer {
         this.controls.maxDistance = 15;
     }
 
-    private setupCamera(): void {
-        this.camera = new PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 2000);
+    private setupCamera(fieldOfView: number): void {
+        this.camera = new PerspectiveCamera(fieldOfView, innerWidth / innerHeight, 0.1, 2000);
         this.camera.position.set(0, 1, 0.375).setLength(15);
     }
 

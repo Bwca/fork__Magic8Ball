@@ -10,7 +10,7 @@ export declare class THREEBall8Renderer implements AbstractRenderer {
     private readonly clock;
     private isRunning;
     private writing;
-    constructor(ballColor?: number | string);
+    constructor(ballColor?: number | string, initialFieldOfView?: number);
     showBall(host?: HTMLElement): void;
     hideAnswer(): void;
     showAnswer({ answer, event, lineSeparator }: AnswerPayload): void;
